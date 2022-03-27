@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Отчет об ошибках {{ project.name }}{% endblock %}
+
+{% block content %}
+<main id="main" class="main">
+    <section class="section dashboard">
+      <div class="pagetitle">
+        <h1>Ошибки при выгрузке</h1>
+      </div>
+        <div class="row">
+            {% for report in all_reports %}
+                {% if report %}
+                    {% if report.error_text != '-'%}
+                    <div class="col-lg-12">
+                        <div class="card info-card customers-card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h5>{{report.report_name}} <span>| {{report.created}}</span></h5>
+                                </div>
+
+                                <p style="margin-top:16px"><span class="badge rounded-pill bg-danger">ERROR</span></p>
+                                    <p>{{report.error_text}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endif %}
+                {% else %}
+
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+{% endblock %}

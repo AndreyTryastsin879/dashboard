@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Информация о проекте {{ project.name }}{% endblock %}
+
+{% block content %}
+<main id="main" class="main">
+    <section class="section dashboard">
+
+      <div class="pagetitle">
+        <h1>Общая информация о проекте {{project.name}}</h1>
+      </div><!-- End Page Title -->
+
+      <div class="card-title">
+        <h5>Состояние выгрузки</h5>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Название отчета</th>
+                    <th scope="col">Статус проверки</th>
+                    <th scope="col">Дата проверки</th>
+                    <th scope="col">Значение</th>
+                    <th scope="col">Текст ошибки</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% if yandex_traffic_report %}
+                  <tr>
+                    <td>Траффик из Яндекса</td>
+                    <td>{{yandex_traffic_report.status}}</td>
+                    <td>{{yandex_traffic_report.created}}</td>
+                    <td>{{yandex_traffic_report.value}}</td>
+                    {% if yandex_traffic_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Траффик из Яндекса</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if google_traffic_report %}
+                  <tr>
+                    <td>Траффик из Google</td>
+                    <td>{{google_traffic_report.status}}</td>
+                    <td>{{google_traffic_report.created}}</td>
+                    <td>{{google_traffic_report.value}}</td>
+                    {% if google_traffic_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Траффик из Google</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if yandex_positions_report %}
+                  <tr>
+                    <td>Позиции в Яндексе</td>
+                    <td>{{yandex_positions_report.status}}</td>
+                    <td>{{yandex_positions_report.created}}</td>
+                    <td>{{yandex_positions_report.value}}</td>
+                    {% if yandex_positions_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Позиции в Яндексе</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if google_positions_report %}
+                  <tr>
+                    <td>Позиции в Google</td>
+                    <td>{{google_positions_report.status}}</td>
+                    <td>{{google_positions_report.created}}</td>
+                    <td>{{google_positions_report.value}}</td>
+                    {% if google_positions_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Позиции в Google</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if yandex_indexed_pages_quantity_report %}
+                  <tr>
+                    <td>Количество страниц в Яндексе</td>
+                    <td>{{yandex_indexed_pages_quantity_report.status}}</td>
+                    <td>{{yandex_indexed_pages_quantity_report.created}}</td>
+                    <td>{{yandex_indexed_pages_quantity_report.value}}</td>
+                    {% if yandex_indexed_pages_quantity_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Количество страниц в Яндексе</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if google_indexed_pages_quantity_report %}
+                  <tr>
+                    <td>Количество страниц в Google</td>
+                    <td>{{google_indexed_pages_quantity_report.status}}</td>
+                    <td>{{google_indexed_pages_quantity_report.created}}</td>
+                    <td>{{google_indexed_pages_quantity_report.value}}</td>
+                    {% if google_indexed_pages_quantity_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Количество страниц в Google</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if pages_quantity_in_sitemap_report %}
+                  <tr>
+                    <td>Парсинг Sitemap</td>
+                    <td>{{pages_quantity_in_sitemap_report.status}}</td>
+                    <td>{{pages_quantity_in_sitemap_report.created}}</td>
+                    <td>{{pages_quantity_in_sitemap_report.value}}</td>
+                    {% if pages_quantity_in_sitemap_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Парсинг Sitemap</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                {% if traffic_categories_report %}
+                  <tr>
+                    <td>Распределение трафика</td>
+                    <td>{{traffic_categories_report.status}}</td>
+                    <td>{{traffic_categories_report.created}}</td>
+                    <td>{{traffic_categories_report.value}}</td>
+                    {% if traffic_categories_report.status == 'ERROR'%}
+                      <td><a href="{{ url_for('error_report', slug=project.slug)}}">Текст ошибки</a></td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                  </tr>
+
+                {% else %}
+                  <tr>
+                    <td>Распределение трафика</td>
+                    <td>Нет данных</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                {% endif %}
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-title">
+        <h5>Заметки по проекту</h5>
+      </div>
+      <div class="row">
+        {% for note in notes|reverse %}
+
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="card-header">{{note.title}}</div>
+              <div class="card-body">
+                <p style="margin-top:16px"><span class="badge rounded-pill bg-secondary">{{note.period}}</span></p>
+                {{note.text|safe}}
+              </div>
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
+
+
+    </section>
+</main>
+
+
+{% endblock %}

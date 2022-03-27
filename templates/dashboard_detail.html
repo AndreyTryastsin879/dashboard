@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{current_service.name}} Dashboard {{current_project.name}}
+{% endblock %}
+
+
+{% block content %}
+<body class="{% if sidebar_closed %}toggle-sidebar{% endif %}">
+
+    {{ super() }}
+    {% block app_content %}
+<main class="main">
+    <section class="section dashboard">
+                 <div class="embed-responsive"
+                      style="min-height: {% if min_height is defined %}{{ min_height }}{% else %}200{% endif %}px">
+                     <iframe
+                             src="{{ dash_url }}" style="overflow-x: hidden; overflow-y: visible;
+                             overflow-x: hidden; position: absolute;
+                             width: 100%; height: 100%; background: transparent;">
+                    </iframe>
+                </div>
+   </section>
+</main>
+    {% endblock %}
+
+{% endblock %}
+
+
