@@ -8,7 +8,7 @@ from flask_script import Manager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
-from dashapp.seo_dashboard_app import create_dashboard
+from dashapp.seo_dashboard_app import create_dashboard, update_layout_callback_factory
 
 PROJECTS = [
     'megaposm',
@@ -45,13 +45,11 @@ admin.add_view(ModelView(Project, db.session))
 admin.add_view(ModelView(Service, db.session))
 admin.add_view(ModelView(Note, db.session))
 
-dashboards = {}
-
 
 with app.app_context():
     for project in PROJECTS:
         dashboard = create_dashboard(app, project)
-        dashboards[project] = dashboard
+        dashboard.layout = update_layout_callback_factory(project)
 
 
 

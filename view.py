@@ -1,9 +1,9 @@
-from app import app, dashboards
+from app import app
 from flask import render_template
 
 from models import Project, Service, Data_collecting_report
 
-from dashapp.seo_dashboard_app import update_layout
+from dashapp.seo_dashboard_app import update_layout_callback_factory
 
 
 def select_report(slug, report_name):
@@ -77,10 +77,10 @@ def error_report(slug):
 @app.route('/<project_slug>/service/<service_slug>/')
 def seodashboard(project_slug, service_slug):
     projects = Project.query.all()
-    current_project = Project.query.filter(Project.slug == project_slug).one_or_none()
+    current_project = Project.query.filter(Project.slug == project_slug).first()
     current_service = Service.query.filter(Service.slug == service_slug).one_or_none()
     sidebar_closed = True
-    update_layout(current_project, dashboards[current_project.slug])
+    update_layout_callback_factory(current_project.name)
     return render_template('dashboard_detail.html',
                            dash_url=f'/dash/{project_slug}/service/{service_slug}',
                            projects=projects,

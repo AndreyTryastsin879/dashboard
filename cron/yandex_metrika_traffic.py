@@ -53,14 +53,16 @@ def main():
 	    
 	    #print(project_name)
 	    
-	    current_date = datetime.datetime.now()
-	    #print(current_date)
+	    current_date = datetime.now()
+	    print(current_date)
 	    
 	    try:
 	        #Yandex
 	        total_from_search_engine = get_search_engine_data_from_metrika_api(current_date, 'Yandex', project_yandex_metrika_counter_id)
 
 	        total_from_yandex_engine = int(total_from_search_engine[0])
+
+	        print(total_from_yandex_engine)
 
 	        insert_data_to_database(project_name, 'Yandex', 'Traffic', total_from_yandex_engine, current_date)
 
@@ -76,11 +78,13 @@ def main():
 	        total_from_search_engine = get_search_engine_data_from_metrika_api(current_date, 'Google', project_yandex_metrika_counter_id)
 	          
 	        total_from_google_engine = int(total_from_search_engine[0])
+
+	        print(total_from_google_engine)
 	                
 	        insert_data_to_database(project_name, 'Google', 'Traffic', total_from_google_engine, current_date)
 	        
 	        insert_data_to_data_collecting_report(project_name, 'Google_traffic_metrika_report',
-	                                              'OK', '-', current_date, total_from_google_engine)
+	        									  'OK', '-', current_date, total_from_google_engine)
 	    except Exception as e:
 	        error_mesage = get_traceback(e)
 	        insert_data_to_data_collecting_report(project_name, 'Google_traffic_metrika_report',
