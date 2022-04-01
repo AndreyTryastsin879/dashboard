@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime
+from flask_security import UserMixin, RoleMixin
 
 
 projects_services = db.Table(
@@ -12,6 +13,12 @@ projects_notes = db.Table(
     'projects_notes',
     db.Column('project_id', db.Integer, db.ForeignKey('project.id')),
     db.Column('note_id', db.Integer, db.ForeignKey('note.id'))
+)
+
+roles_users = db.Table(
+    'roles_users',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
 )
 
 
@@ -98,3 +105,18 @@ class Data_collecting_report(db.Model):
 
     def __init__(self, *args, **kwargs):
         super(Data_collecting_report, self).__init__(*args, **kwargs)
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(200))
+    active = db.Column(db.Boolean())
+    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+
+
+class Role(db.Model, RoleMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    description = db.Column(db.String(250))

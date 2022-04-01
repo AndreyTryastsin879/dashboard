@@ -3,6 +3,8 @@ from flask import render_template
 
 from models import Project, Service, Data_collecting_report
 
+from flask_security import login_required
+
 from dashapp.seo_dashboard_app import update_layout_callback_factory
 
 
@@ -15,12 +17,14 @@ def select_report(slug, report_name):
 
 
 @app.route('/')
+@login_required
 def index():
     projects = Project.query.all()
     return render_template('index.html', projects=projects)
 
 
 @app.route('/<slug>/')
+@login_required
 def project_detail(slug):
     projects = Project.query.all()
     project = Project.query.filter(Project.slug == slug).first_or_404()
@@ -48,6 +52,7 @@ def project_detail(slug):
 
 
 @app.route('/<slug>/error/')
+@login_required
 def error_report(slug):
     projects = Project.query.all()
     project = Project.query.filter(Project.slug == slug).first_or_404()
@@ -75,10 +80,11 @@ def error_report(slug):
 
 
 @app.route('/<project_slug>/service/<service_slug>/')
+@login_required
 def seodashboard(project_slug, service_slug):
     projects = Project.query.all()
-    current_project = Project.query.filter(Project.slug == project_slug).first()
-    current_service = Service.query.filter(Service.slug == service_slug).one_or_none()
+    current_project = Project.query.filter(Project.slug == project_slug).first_or_404()
+    current_service = Service.query.filter(Service.slug == service_slug).first_or_404()
     sidebar_closed = True
     update_layout_callback_factory(current_project.name)
     return render_template('dashboard_detail.html',
@@ -87,3 +93,8 @@ def seodashboard(project_slug, service_slug):
                            current_project=current_project,
                            current_service=current_service,
                            sidebar_closed=sidebar_closed)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
