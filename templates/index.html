@@ -9,35 +9,74 @@
     <section class="section dashboard">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>О приложении</h1>
     </div><!-- End Page Title -->
 
+        <div class="row">
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <p style="margin-top:30px">Приложение собирает данные из разных источников и объединяет их
+                    в единный отчет с графиками.</p>
+                  <p>В админке можно добавить новый проект,
+                    создать дашборд (например, SEO или SMM ) и привязать его к проекту, создать заметку и привязать
+                      ее к проекту.</p>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+
+      <div class="card-title">
+        <h5>Реализованные дашборды</h5>
+      </div>
 
       <div class="row">
-            <div class="col-xxl-4 col-xl-12">
-
-              <div class="card info-card customers-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-people"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
-                    </div>
-                  </div>
-
-                </div>
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="card-header">SEO</div>
+              <div class="card-body">
+                  <strong><p style="margin-top:16px">Для каждого проекта собирается:</p></strong>
+                  <ul style="margin-top:16px">
+                      <li>Количество визитов из Яндекса и Google (API Яндекс.Метрика) - ежедневно в 23:55</li><br>
+                      <li>Количество проиндексированных страниц в Яндексе (API Яндекс.Вебмастер) -
+                          ежедневно в 23:00,</li><br>
+                      <li>Количество проиндексированных страниц в Google (пасинг Google) -
+                          раз в неделю,</li><br>
+                      <li>Доля отслеживаемых запросов в органической выдаче Яндекса и Google (API SERanking) -
+                      остановлено из-за санкций,</li><br>
+                      <li>Количество страниц в Sitemap (парсинг Sitemap) - раз в неделю,</li><br>
+                      <li>Количество визитов по каждому URL для расчета распределения трафика по
+                      страницам (API Яндекс.Метрика) - первого числа каждого месяца.</li><br>
+                  </ul>
+                  <strong><p style="margin-top:16px">Отчет по каждой выгрузке можно посмотреть в разделе
+                  "Общая информация о проекте".</p></strong>
               </div>
-
             </div>
-
+          </div>
       </div>
+        <div class="card-title">
+        <h5>Админка</h5>
+        </div>
+        <div class="row">
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                  <strong><p style="margin-top:16px">В админке можно создавать и редактировать:</p></strong>
+                  <ul style="margin-top:16px">
+                      <li>Проект (Project) - обязательно нужно задать поле name и slug, иначе приложение
+                      упадет ;) Для сбора данных нужно задать соответсвующие остальные поля,</li><br>
+                      <li>Дашборд (Service) - после заполнения всех полей привязать к нужному проекту,</li><br>
+                      <li>Заметку (Note) - после заполнения всех полей привязать к нужному проекту.</li><br>
+                  </ul>
+
+              </div>
+            </div>
+          </div>
+      </div>
+
+
     </section>
 </main>
 {% endblock %}
