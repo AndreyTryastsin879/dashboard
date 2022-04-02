@@ -6,7 +6,7 @@ from datetime import timedelta
 from config import *
 
 
-def get_auth_headers_se_ranking() -> dict:
+def get_auth_headers_se_ranking():
     return {'Authorization': f'OAuth {SE_RANKING_TOKEN}'}
 
 

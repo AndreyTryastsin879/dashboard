@@ -11,11 +11,11 @@ def last_day_of_month(any_day):
     return next_month - datetime.timedelta(days=next_month.day)
 
 
-def get_auth_headers() -> dict:
+def get_auth_headers():
     return {'Authorization': f'OAuth {YANDEX_TOKEN}'}
 
 
-def get_webmaster_user_id() -> str:
+def get_webmaster_user_id():
     r = requests.get(WEBMASTER_USERID_URL, headers=get_auth_headers())
     user_id = json.loads(r.text)['user_id']
     return user_id

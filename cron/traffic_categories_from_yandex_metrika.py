@@ -35,7 +35,7 @@ def get_auth_headers():
     return {'Authorization': f'OAuth {YANDEX_TOKEN}'}
 
 
-def metrika_get_params(first_month_day, last_month_day, project_yandex_metrika_counter_id) -> dict:
+def metrika_get_params(first_month_day, last_month_day, project_yandex_metrika_counter_id):
     return {
                     'id': project_yandex_metrika_counter_id,
                     'date1': first_month_day.strftime('%Y-%m-%d'),

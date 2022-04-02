@@ -13,11 +13,11 @@ METRICS = 'ym:s:visits'
 FILTERS = "ym:s:SearchEngineName=*'{}*'"
 
 
-def get_auth_headers() -> dict:
+def get_auth_headers():
     return {'Authorization': f'OAuth {YANDEX_TOKEN}'}
 
 
-def metrika_get_params(current_date, search_engine_name, project_yandex_metrika_counter_id) -> dict:
+def metrika_get_params(current_date, search_engine_name, project_yandex_metrika_counter_id):
     return {
                     'id': project_yandex_metrika_counter_id,
                     'date1': current_date.strftime('%Y-%m-%d'),
