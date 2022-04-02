@@ -7,7 +7,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from config import *
+from cron.config import *
 
 
 headers = {
