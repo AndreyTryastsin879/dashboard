@@ -174,7 +174,7 @@ def create_dashboard(flask_app, project):
         external_stylesheets=EXTERNAL_STYLESHEET,
     )
 
-    dashboard.layout = html.Div()
+    dashboard.layout = html.Div() ###
 
     # CALLBACKS
 
