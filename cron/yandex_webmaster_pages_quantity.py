@@ -88,8 +88,8 @@ def main():
                     pass
                
             except Exception as e:
-            	error_mesage = get_traceback(e)
-            	insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
+                error_mesage = get_traceback(e)
+                insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
                                                     'ERROR', error_mesage, datetime.datetime.now(), '-')
 
 if __name__ == '__main__':

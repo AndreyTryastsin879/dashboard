@@ -4,7 +4,7 @@ import sqlalchemy as db
 
 from dashapp.plot_settings import *
 
-from config import Configuration
+from app_config import Configuration
 
 EXTERNAL_STYLESHEET = [
     {
