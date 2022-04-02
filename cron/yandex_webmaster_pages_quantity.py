@@ -54,7 +54,7 @@ def main():
         
         print(project_name)
         
-        current_date = datetime.datetime.now()#.date()
+        current_date = datetime.datetime.now().date()
 
         print(current_date)
         
@@ -80,9 +80,9 @@ def main():
                                             'Yandex_indexed_pages_quantity', 
                                             project_indexed_pages_quantity[0]['value'], 
                                             current_date)
-                    
+
                     insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
-                                                          'OK', '-', current_date, project_indexed_pages_quantity[0]['value'])
+                                                          'OK', '-', datetime.datetime.now(), project_indexed_pages_quantity[0]['value'])
                     
                 if len(project_indexed_pages_quantity) == 0:
                     pass
@@ -90,7 +90,7 @@ def main():
             except Exception as e:
             	error_mesage = get_traceback(e)
             	insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
-                                                    'ERROR', error_mesage, current_date, '-')
+                                                    'ERROR', error_mesage, datetime.datetime.now(), '-')
 
 if __name__ == '__main__':
     main()
