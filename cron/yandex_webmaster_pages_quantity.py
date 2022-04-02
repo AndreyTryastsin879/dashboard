@@ -54,7 +54,7 @@ def main():
         
         print(project_name)
         
-        current_date = datetime.datetime.now().date()
+        current_date = datetime.datetime.now()#.date()
 
         print(current_date)
         
