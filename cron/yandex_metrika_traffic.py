@@ -3,7 +3,7 @@ import json
 import datetime
 from datetime import timedelta
 
-from cron.config import *
+from config import *
 
 LIMIT = 100000
 DIMENSIONS = 'ym:s:searchEngine'
