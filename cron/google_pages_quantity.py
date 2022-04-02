@@ -27,7 +27,6 @@ def main():
 	    current_date = datetime.datetime.now()
 	    
 	    try:
-	        time.sleep(10)
 	        request = requests.get(f'https://www.google.com/search?q=site:{project_domain}', headers=headers)
 	        soup = BeautifulSoup(request.text, 'lxml')
 	        value = soup.find_all(id = 'result-stats')[0].text.strip().split('примерно ')[1].split(' (')[0].replace('\xa0','')
@@ -35,7 +34,7 @@ def main():
 	        insert_data_to_database(project_name, 'Google', 'Google_indexed_pages_quantity', value, current_date)
 	        insert_data_to_data_collecting_report(project_name, 'Google_indexed_pages_quantity',
 	                                              'OK', '-', current_date, value)
-	        time.sleep(5)
+	        time.sleep(10)
 	    except Exception as e:
 	        error_mesage = get_traceback(e)
 	        insert_data_to_data_collecting_report(project_name, 'Google_indexed_pages_quantity',

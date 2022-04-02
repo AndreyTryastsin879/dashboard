@@ -54,7 +54,7 @@ def main():
         
         print(project_name)
         
-        current_date = datetime.date(2022, 3, 27) #datetime.now().date()
+        current_date = datetime.datetime.now().date()
 
         print(current_date)
         
@@ -86,7 +86,7 @@ def main():
                     
                 if len(project_indexed_pages_quantity) == 0:
                     pass
-                
+               
             except Exception as e:
             	error_mesage = get_traceback(e)
             	insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
