@@ -4,8 +4,9 @@ import traceback
 
 import pandas as pd
 
+from config import DB_PASS, DB_HOST, DB_PORT, DB_USER, DB_NAME
 
-engine = db.create_engine('mysql+mysqlconnector://root:root@localhost/mrnr_dashboard_db')
+engine = db.create_engine(f'mysql+mysqlconnector://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 connection = engine.connect()
 metadata = db.MetaData()
 
