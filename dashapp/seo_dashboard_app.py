@@ -19,6 +19,10 @@ EXTERNAL_STYLESHEET = [
 ]
 
 
+def new():
+    pass
+
+
 def linear_plot_database_to_df(data):
     if len(data) > 0:
         df = pd.DataFrame(data)
