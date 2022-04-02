@@ -3,7 +3,8 @@ import json
 import datetime
 from datetime import timedelta
 
-from config import *
+from .config import YANDEX_TOKEN, METRIKA_URL_TEMPLATE, select_projects_by_service_id, insert_data_to_database, \
+    insert_data_to_data_collecting_report, get_traceback
 
 LIMIT = 100000
 DIMENSIONS = 'ym:s:searchEngine'
