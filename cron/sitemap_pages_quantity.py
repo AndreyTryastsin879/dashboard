@@ -43,51 +43,51 @@ def check_multi_or_mono_sitemap(soup_sitemap):
 
 
 def main():
-	df = select_projects_by_service_id('SEO')[['name','sitemap_path','second_sitemap_path']]
-	df.dropna(subset=['sitemap_path'], inplace=True)
+    df = select_projects_by_service_id('SEO')[['name','sitemap_path','second_sitemap_path']]
+    df.dropna(subset=['sitemap_path'], inplace=True)
 
-	projects_param = df.to_dict('record')
+    projects_param = df.to_dict('record')
 
-	for row in projects_param:
-	    project_name, project_sitemap_path, project_second_sitemap_path = row['name'], row['sitemap_path'], row['second_sitemap_path']
-	    print(project_name)
-	    print(project_sitemap_path)
-	    print(project_second_sitemap_path)
-	    
-	    current_date = datetime.datetime.now()
-	    try:
-	        if project_second_sitemap_path == None:
-	            request = requests.get(project_sitemap_path)
-	            soup_sitemap = BeautifulSoup(request.text, 'lxml')
+    for row in projects_param:
+        project_name, project_sitemap_path, project_second_sitemap_path = row['name'], row['sitemap_path'], row['second_sitemap_path']
+        print(project_name)
+        print(project_sitemap_path)
+        print(project_second_sitemap_path)
 
-	            url_list = check_multi_or_mono_sitemap(soup_sitemap)
+        current_date = datetime.datetime.now()
+        try:
+            if project_second_sitemap_path == None:
+                request = requests.get(project_sitemap_path)
+                soup_sitemap = BeautifulSoup(request.text, 'lxml')
 
-	            value = len(url_list)
-	            print(value)
-	            insert_data_to_database(project_name, 'Sitemap', 'Pages_quantity_in_sitemap', value, current_date)
-	            insert_data_to_data_collecting_report(project_name, 'Pages_quantity_in_sitemap',
-	                                              'OK', '-', current_date, value)
+                url_list = check_multi_or_mono_sitemap(soup_sitemap)
 
-	        if project_second_sitemap_path != None:
-	            request_first_sitemap = requests.get(project_sitemap_path)
-	            soup_first_sitemap = BeautifulSoup(request.text, 'lxml')
+                value = len(url_list)
+                print(value)
+                insert_data_to_database(project_name, 'Sitemap', 'Pages_quantity_in_sitemap', value, current_date)
+                insert_data_to_data_collecting_report(project_name, 'Pages_quantity_in_sitemap',
+                                                  'OK', '-', current_date, value)
 
-	            first_sitemap_url_list = check_multi_or_mono_sitemap(soup_first_sitemap)
+            if project_second_sitemap_path != None:
+                request_first_sitemap = requests.get(project_sitemap_path)
+                soup_first_sitemap = BeautifulSoup(request.text, 'lxml')
 
-	            request_second_sitemap = requests.get(project_second_sitemap_path)
-	            soup_second_sitemap = BeautifulSoup(request_second_sitemap.text, 'lxml')
+                first_sitemap_url_list = check_multi_or_mono_sitemap(soup_first_sitemap)
 
-	            second_sitemap_url_list = check_multi_or_mono_sitemap(soup_second_sitemap)
+                request_second_sitemap = requests.get(project_second_sitemap_path)
+                soup_second_sitemap = BeautifulSoup(request_second_sitemap.text, 'lxml')
 
-	            value = len(first_sitemap_url_list)+len(second_sitemap_url_list)
-	            print(value)
-	            insert_data_to_database(project_name, 'Sitemap', 'Pages_quantity_in_sitemap', value, current_date)
-	            insert_data_to_data_collecting_report(project_name, 'Pages_quantity_in_sitemap',
-	                                              'OK', '-', current_date, value)
-	    except Exception as e:
-	        error_mesage = get_traceback(e)
-	        insert_data_to_data_collecting_report(project_name, 'Pages_quantity_in_sitemap',
-	                                              'ERROR', error_mesage, current_date, '-')
+                second_sitemap_url_list = check_multi_or_mono_sitemap(soup_second_sitemap)
+
+                value = len(first_sitemap_url_list)+len(second_sitemap_url_list)
+                print(value)
+                insert_data_to_database(project_name, 'Sitemap', 'Pages_quantity_in_sitemap', value, current_date)
+                insert_data_to_data_collecting_report(project_name, 'Pages_quantity_in_sitemap',
+                                                  'OK', '-', current_date, value)
+        except Exception as e:
+            error_mesage = get_traceback(e)
+            insert_data_to_data_collecting_report(project_name, 'Pages_quantity_in_sitemap',
+                                                  'ERROR', error_mesage, current_date, '-')
 
 
 if __name__ == '__main__':

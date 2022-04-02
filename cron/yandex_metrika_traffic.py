@@ -52,7 +52,7 @@ def main():
 
         #print(project_name)
 
-        current_date = datetime.datetime.now()
+        current_date = datetime.datetime.now().date()
         print(current_date)
 
         try:
@@ -66,11 +66,11 @@ def main():
             insert_data_to_database(project_name, 'Yandex', 'Traffic', total_from_yandex_engine, current_date)
 
             insert_data_to_data_collecting_report(project_name, 'Yandex_traffic_metrika_report',
-                                                  'OK', '-', current_date, total_from_yandex_engine)
+                                                  'OK', '-', datetime.datetime.now(), total_from_yandex_engine)
         except Exception as e:
             error_mesage = get_traceback(e)
             insert_data_to_data_collecting_report(project_name, 'Yandex_traffic_metrika_report',
-                                                  'ERROR', error_mesage, current_date, '-')
+                                                  'ERROR', error_mesage, datetime.datetime.now(), '-')
 
         try:
             #Google
@@ -83,11 +83,11 @@ def main():
             insert_data_to_database(project_name, 'Google', 'Traffic', total_from_google_engine, current_date)
 
             insert_data_to_data_collecting_report(project_name, 'Google_traffic_metrika_report',
-                                                  'OK', '-', current_date, total_from_google_engine)
+                                                  'OK', '-', datetime.datetime.now(), total_from_google_engine)
         except Exception as e:
             error_mesage = get_traceback(e)
             insert_data_to_data_collecting_report(project_name, 'Google_traffic_metrika_report',
-                                                  'ERROR', error_mesage, current_date, '-')
+                                                  'ERROR', error_mesage, datetime.datetime.now(), '-')
 
 
 if __name__ == '__main__':

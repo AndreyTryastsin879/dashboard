@@ -24,7 +24,7 @@ def main():
 	for row in projects_param:
 	    project_name, project_domain = row['name'], row['domain']
 	    
-	    current_date = datetime.datetime.now()
+	    current_date = datetime.datetime.now().date()
 	    
 	    try:
 	        request = requests.get(f'https://www.google.com/search?q=site:{project_domain}', headers=headers)
@@ -33,12 +33,12 @@ def main():
 	        print(value.text)
 	        insert_data_to_database(project_name, 'Google', 'Google_indexed_pages_quantity', value, current_date)
 	        insert_data_to_data_collecting_report(project_name, 'Google_indexed_pages_quantity',
-	                                              'OK', '-', current_date, value)
+	                                              'OK', '-', datetime.datetime.now(), value)
 	        time.sleep(10)
 	    except Exception as e:
 	        error_mesage = get_traceback(e)
 	        insert_data_to_data_collecting_report(project_name, 'Google_indexed_pages_quantity',
-	                                              'ERROR', error_mesage, current_date, '-')
+	                                              'ERROR', error_mesage, datetime.datetime.now(), '-')
 
 if __name__ == '__main__':
     main()
