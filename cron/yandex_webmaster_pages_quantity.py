@@ -3,7 +3,7 @@ import json
 import datetime
 from datetime import timedelta
 
-from cron.config import *
+from config import *
 
 
 def last_day_of_month(any_day):

@@ -7,8 +7,8 @@ import re
 
 import pandas as pd
 
-from cron.config import *
-from cron.traffic_categories_templates import *
+from config import *
+from traffic_categories_templates import *
 
 
 LIMIT = 100000

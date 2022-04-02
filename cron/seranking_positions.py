@@ -3,7 +3,7 @@ import json
 import datetime
 from datetime import timedelta
 
-from cron.config import *
+from config import *
 
 
 def get_auth_headers_se_ranking():

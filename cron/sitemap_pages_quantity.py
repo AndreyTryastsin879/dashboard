@@ -7,7 +7,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from cron.config import *
+from config import *
 
 
 def parse_mono_sitemap(beautiful_soup):
