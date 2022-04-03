@@ -171,7 +171,7 @@ def create_dashboard(flask_app, project):
         name='SEO Dashboard',
         url_base_pathname=f'/dash/{project}/service/seo/',
         suppress_callback_exceptions=True,
-        external_stylesheets=EXTERNAL_STYLESHEET,
+        external_stylesheets=EXTERNAL_STYLESHEET
     )
 
     dashboard.layout = html.Div()
