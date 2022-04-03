@@ -47,7 +47,7 @@ def line_plot(df, title, selector_id, graph_id):
                         ),
                     ], className="card info-card customers-card"
                 ),
-            ], className="col-12 col-xxxl-6")
+            ], className="col-xxl-6 col-xl-12")
     else:
         pass
 
@@ -134,7 +134,7 @@ def bar_chart_page_quantity_comparison(df1, df2, df3):
                     ], className="card info-card customers-card"
 
                 ),
-            ], className="col-12 col-xxxl-6")
+            ], className="col-xxl-6 col-xl-12")
     else:
         pass
 
@@ -164,6 +164,6 @@ def traffic_category_bar_chart(df):
                         )
                     ], className="card info-card customers-card"
                 ),
-            ], className="col-12 col-xxxl-6")
+            ], className="col-12")
     else:
         pass
