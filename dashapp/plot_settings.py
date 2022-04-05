@@ -1,3 +1,4 @@
+import pandas as pd
 from datetime import datetime, timedelta
 
 from dash import html
@@ -7,6 +8,47 @@ from dash.dependencies import Input, Output
 
 import plotly.graph_objs as go
 import plotly.express as px
+
+import sqlalchemy as db
+
+from app_config import Configuration
+
+
+def linear_plot_database_to_df(data):
+    if len(data) > 0:
+        df = pd.DataFrame(data)
+        df.columns = data[0].keys()
+        return df
+    else:
+        df = pd.DataFrame(columns=['data_source', 'data_type'])
+        return df
+
+
+def traffic_category_plot_database_to_df(data):
+    if len(data) > 0:
+        df = pd.DataFrame(data)
+        df.columns = data[0].keys()
+        return df
+    else:
+        df = pd.DataFrame(columns=['month_year', 'traffic_category', 'value'])
+        return df
+
+
+def create_slice(df, data_source, data_type):
+    return df[(df['data_source'] == data_source) & (df['data_type'] == data_type)]
+
+
+def select_table_from_db(table_name, metadata, engine):
+    data_table = db.Table(table_name, metadata, autoload=True, autoload_with=engine)
+    return data_table
+
+
+def slice_table_by_project_name(table, project, connection):
+    sliced_data = connection.execute(
+        db.select([table])
+            .where(table.columns.project_name == project.title())
+    ).fetchall()
+    return sliced_data
 
 
 def line_plot(df, title, selector_id, graph_id):
@@ -61,54 +103,82 @@ def line_plot(df, title, selector_id, graph_id):
         pass
 
 
-def line_plot_settings(dashboard, df, output, input_selector, colour, xaxis_name, yaxis_name, plot_title):
+def figure_settings(sliced_df, start_date, end_date, colour, xaxis_name, yaxis_name, plot_title):
+    filtered_data = sliced_df.query('created >= @start_date and created <= @end_date')
+
+    data = [go.Scatter(x=filtered_data['created'],
+                       y=filtered_data['value'],
+                       mode='lines',
+                       marker=dict(color=f'{colour}')
+                       )
+            ]
+
+    return (
+        {
+            'data': data,
+            'layout': go.Layout(xaxis={'title': f'{xaxis_name}'},
+                                yaxis={'title': f'{yaxis_name}'},
+                                title={'text': f'{plot_title}',
+                                       'y': 0.9,
+                                       'x': 0.5,
+                                       'xanchor': 'center',
+                                       'yanchor': 'top'}
+                                )
+        },
+    )
+
+
+def line_plot_settings(project, data_source, df_slice_name, dashboard, output, input_selector,
+                       colour, xaxis_name, yaxis_name, plot_title):
     @dashboard.callback(
         [Output(f'{output}', 'figure'),
          ],
-
         [Input(f'{input_selector}', 'start_date'),
          Input(f'{input_selector}', 'end_date'),
          ]
     )
     def update_figure(start_date, end_date):
-        # Фильтрация данных для вывода диапазона на график
-        filtered_data = df.query('created >= @start_date and created <= @end_date')
+        engine = db.create_engine(Configuration.SQLALCHEMY_DATABASE_URI)
+        connection = engine.connect()
+        metadata = db.MetaData()
 
-        data = [go.Scatter(x=filtered_data['created'],
-                           y=filtered_data['value'],
-                           mode='lines',
-                           marker=dict(color=f'{colour}')
-                           )
-                ]
+        line_plots_data_table = select_table_from_db('seo_data_for_linear_plots', metadata, engine)
 
-        start_date = df['created'].dt.date.min()
-        end_date = df['created'].dt.date.max()
+        line_plots_seo_data = slice_table_by_project_name(line_plots_data_table, project, connection)
 
-        count_d = df['created'].count()
-        count_v = df['value'].count()
-        sum_v = df['value'].sum()
+        df = linear_plot_database_to_df(line_plots_seo_data)
 
-        return (
-            {
-                'data': data,
-                'layout': go.Layout(xaxis={'title': f'start: {start_date} end: start: {end_date}'},
-                                    yaxis={'title': f'{yaxis_name}'},
-                                    title={'text': f'К-дат: {count_d} К-значений: {count_v} С-значений: {sum_v}',
-                                           'y': 0.9,
-                                           'x': 0.5,
-                                           'xanchor': 'center',
-                                           'yanchor': 'top'}
-                                    )
-                # 'layout': go.Layout(xaxis={'title': f'{xaxis_name}'},
-                #                     yaxis={'title': f'{yaxis_name}'},
-                #                     title={'text': f'{plot_title}',
-                #                            'y': 0.9,
-                #                            'x': 0.5,
-                #                            'xanchor': 'center',
-                #                            'yanchor': 'top'}
-                #                     )
-            },
-        )
+        if data_source == 'Yandex':
+            if df_slice_name == 'Yandex_indexed_pages_quantity':
+                sliced_df = create_slice(df, 'Yandex', 'Yandex_indexed_pages_quantity')
+                return figure_settings(sliced_df, start_date, end_date, colour,
+                                xaxis_name, yaxis_name, plot_title)
+
+            if df_slice_name == 'Positions_percentage':
+                sliced_df = create_slice(df, data_source, df_slice_name)
+                return figure_settings(sliced_df, start_date, end_date, colour,
+                                xaxis_name, yaxis_name, plot_title)
+
+            if df_slice_name == 'Traffic':
+                sliced_df = create_slice(df, data_source, df_slice_name)
+                return figure_settings(sliced_df, start_date, end_date, colour,
+                                xaxis_name, yaxis_name, plot_title)
+
+        if data_source == 'Google':
+            if df_slice_name == 'Google_indexed_pages_quantity':
+                sliced_df = create_slice(df, data_source, df_slice_name)
+                return figure_settings(sliced_df, start_date, end_date, colour,
+                                xaxis_name, yaxis_name, plot_title)
+
+            if df_slice_name == 'Google_positions_report':
+                sliced_df = create_slice(df, data_source, df_slice_name)
+                return figure_settings(sliced_df, start_date, end_date, colour,
+                                xaxis_name, yaxis_name, plot_title)
+
+            if df_slice_name == 'Traffic':
+                sliced_df = create_slice(df, data_source, df_slice_name)
+                return figure_settings(sliced_df, start_date, end_date, colour,
+                                xaxis_name, yaxis_name, plot_title)
 
 
 def bar_chart_page_quantity_comparison(df1, df2, df3):

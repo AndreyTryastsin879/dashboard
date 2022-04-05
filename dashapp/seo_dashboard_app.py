@@ -1,6 +1,5 @@
 import dash
-import pandas as pd
-import sqlalchemy as db
+# import sqlalchemy as db
 
 from dashapp.plot_settings import *
 
@@ -19,41 +18,107 @@ EXTERNAL_STYLESHEET = [
 ]
 
 
-def linear_plot_database_to_df(data):
-    if len(data) > 0:
-        df = pd.DataFrame(data)
-        df.columns = data[0].keys()
-        return df
-    else:
-        df = pd.DataFrame(columns=['data_source', 'data_type'])
-        return df
+def create_dashboard(flask_app, project):
+    print('CREATE DASHBOARD')
 
+    dashboard = dash.Dash(
+        server=flask_app,
+        name='SEO Dashboard',
+        url_base_pathname=f'/dash/{project}/service/seo/',
+        suppress_callback_exceptions=True,
+        external_stylesheets=EXTERNAL_STYLESHEET
+    )
 
-def traffic_category_plot_database_to_df(data):
-    if len(data) > 0:
-        df = pd.DataFrame(data)
-        df.columns = data[0].keys()
-        return df
-    else:
-        df = pd.DataFrame(columns=['month_year', 'traffic_category', 'value'])
-        return df
+    dashboard.layout = html.Div()
 
+    # CALLBACKS
+    # Idexed_pages_quantity
+    ###Yandex
+    line_plot_settings(
+        project=project,
+        data_source='Yandex',
+        df_slice_name='Yandex_indexed_pages_quantity',
+        dashboard=dashboard,
+        output='yandex_indexed_pages_quantity_line_plot',
+        input_selector='yandex_indexed_pages_quantity_selector',
+        colour='#d62728',
+        xaxis_name='Дата',
+        yaxis_name='Количество страниц',
+        plot_title='Количество страниц в базе Яндекса'
+    )
 
-def create_slice(df, data_source, data_type):
-    return df[(df['data_source'] == data_source) & (df['data_type'] == data_type)]
+    ### Google
+    line_plot_settings(project=project,
+                       data_source='Google',
+                       df_slice_name='Google_indexed_pages_quantity',
+                       dashboard=dashboard,
+                       output='google_indexed_pages_quantity_line_plot',
+                       input_selector='google_indexed_pages_quantity_selector',
+                       colour='#2470dc',
+                       xaxis_name='Дата',
+                       yaxis_name='Количество страниц',
+                       plot_title='Количество страниц в базе Google'
+                       )
 
+    # # # SE POSITIONS
+    # # ### Yandex
+    line_plot_settings(
+        project=project,
+        data_source='Yandex',
+        df_slice_name='Positions_percentage',
+        dashboard=dashboard,
+        output='yandex_positions_line_plot',
+        input_selector='yandex_positions_selector',
+        colour='#d62728',
+        xaxis_name='Дата',
+        yaxis_name='% запросов в ТОП10',
+        plot_title='Доля запросов в ТОП10 Яндекса'
+    )
 
-def select_table_from_db(table_name, metadata, engine):
-    data_table = db.Table(table_name, metadata, autoload=True, autoload_with=engine)
-    return data_table
+    # # ### Google
+    line_plot_settings(
+        project=project,
+        data_source='Google',
+        df_slice_name='Google_positions_report',
+        dashboard=dashboard,
+        output='google_positions_line_plot',
+        input_selector='google_positions_selector',
+        colour='#2470dc',
+        xaxis_name='Дата',
+        yaxis_name='% запросов в ТОП10',
+        plot_title='Доля запросов в ТОП10 Google'
+    )
 
+    # # SE TRAFFIC
+    # ### Yandex
+    line_plot_settings(
+        project=project,
+        data_source='Yandex',
+        df_slice_name='Traffic',
+        dashboard=dashboard,
+        output='yandex_traffic_line_plot',
+        input_selector='yandex_traffic_selector',
+        colour='#d62728',
+        xaxis_name='Дата',
+        yaxis_name='Количество визитов',
+        plot_title='Количество визитов из Яндекса'
+    )
 
-def slice_table_by_project_name(table, project, connection):
-    sliced_data = connection.execute(
-        db.select([table])
-        .where(table.columns.project_name == project)
-    ).fetchall()
-    return sliced_data
+    # ### Google
+    line_plot_settings(
+        project=project,
+        data_source='Google',
+        df_slice_name='Traffic',
+        dashboard=dashboard,
+        output='google_traffic_line_plot',
+        input_selector='google_traffic_selector',
+        colour='#2470dc',
+        xaxis_name='Дата',
+        yaxis_name='Количество визитов',
+        plot_title='Количество визитов из Google'
+    )
+
+    return dashboard
 
 
 def create_dashboard(flask_app, project):
@@ -237,6 +302,3 @@ def update_layout_callback_factory(dashboard, project):
         return update_layout(project)
 
     return inner
-
-
-
