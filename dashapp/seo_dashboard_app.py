@@ -227,6 +227,7 @@ def update_layout(dashboard, project):
         yaxis_name='Количество визитов',
         plot_title='Количество визитов из Google'
     )
+    return dashboard
 
 
 
