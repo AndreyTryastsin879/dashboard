@@ -52,7 +52,10 @@ security = Security(app, user_datastore)
 
 projects = Project.query.all()
 
+dashboards = {}
+
 with app.app_context():
     for project in projects:
         dashboard = create_dashboard(app, project.slug)
-        dashboard.layout = update_layout_callback_factory(project.slug)
+        dashboards[project.name] = dashboard
+

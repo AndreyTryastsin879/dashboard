@@ -56,7 +56,22 @@ def slice_table_by_project_name(table, project, connection):
     return sliced_data
 
 
-def update_layout(project):
+def create_dashboard(flask_app, project):
+
+    dashboard = dash.Dash(
+        server=flask_app,
+        name='SEO Dashboard',
+        url_base_pathname=f'/dash/{project}/service/seo/',
+        suppress_callback_exceptions=True,
+        external_stylesheets=EXTERNAL_STYLESHEET
+    )
+
+    dashboard.layout = html.Div()
+
+    return dashboard
+
+
+def update_layout(dashboard, project):
     engine = db.create_engine(Configuration.SQLALCHEMY_DATABASE_URI)
     connection = engine.connect()
     metadata = db.MetaData()
@@ -87,7 +102,7 @@ def update_layout(project):
     print(yandex_traffic_df['created'].min(), yandex_traffic_df['created'].max())
 
     ### DASHBOARD FRONT
-    return html.Div(children=[
+    dashboard.layout = html.Div(children=[
 
         html.Div(children=[
             html.H1(children=f"Данные по SEO {project.title()}")], className="pagetitle"),
@@ -135,46 +150,6 @@ def update_layout(project):
         traffic_category_bar_chart(seo_traffic_categories_df),
 
     ], className="row", style={"color": "#444444"})
-
-
-def update_layout_callback_factory(project):
-    def inner():
-        return update_layout(project)
-
-    return inner
-
-
-def create_dashboard(flask_app, project):
-    engine = db.create_engine(Configuration.SQLALCHEMY_DATABASE_URI)
-    connection = engine.connect()
-    metadata = db.MetaData()
-
-    line_plots_data_table = select_table_from_db('seo_data_for_linear_plots', metadata, engine)
-
-    line_plots_seo_data = slice_table_by_project_name(line_plots_data_table, project, connection)
-
-    df = linear_plot_database_to_df(line_plots_seo_data)
-
-    yandex_indexed_pages_quantity_df = create_slice(df, 'Yandex', 'Yandex_indexed_pages_quantity')
-    google_indexed_pages_quantity_df = create_slice(df, 'Google', 'Google_indexed_pages_quantity')
-
-    yandex_positions_df = create_slice(df, 'Yandex', 'Positions_percentage')
-    google_positions_df = create_slice(df, 'Google', 'Google_positions_report')
-
-    yandex_traffic_df = create_slice(df, 'Yandex', 'Traffic')
-    google_traffic_df = create_slice(df, 'Google', 'Traffic')
-
-    print(yandex_traffic_df['created'].min(), yandex_traffic_df['created'].max())
-
-    dashboard = dash.Dash(
-        server=flask_app,
-        name='SEO Dashboard',
-        url_base_pathname=f'/dash/{project}/service/seo/',
-        suppress_callback_exceptions=True,
-        external_stylesheets=EXTERNAL_STYLESHEET
-    )
-
-    dashboard.layout = html.Div()
 
     # CALLBACKS
 
@@ -253,4 +228,14 @@ def create_dashboard(flask_app, project):
         plot_title='Количество визитов из Google'
     )
 
-    return dashboard
+
+
+
+def update_layout_callback_factory(dashboard, project):
+    def inner():
+        return update_layout(project)
+
+    return inner
+
+
+
