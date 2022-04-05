@@ -17,7 +17,6 @@ EXTERNAL_STYLESHEET = [
     },
 ]
 
-
 def create_dashboard(flask_app, project):
     print('CREATE DASHBOARD')
 
