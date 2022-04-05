@@ -56,10 +56,6 @@ def line_plot(df, title, selector_id, graph_id):
         start_date = df['created'].dt.date.min()
         end_date = df['created'].dt.date.max()
 
-        count_d = df['created'].count()
-        count_v = df['value'].count()
-        sum_v = df['value'].sum()
-
         return html.Div(
             children=[
 
@@ -68,11 +64,6 @@ def line_plot(df, title, selector_id, graph_id):
 
                         html.Div(children=[
                             html.H5(children=title, className="card-title"),
-
-                            html.P(children=f'Количество дат {count_d}'),
-
-                            html.P(children=f'Количество значений {count_v}'),
-                            html.P(children=f'Сумма значений {sum_v}'),
 
                             html.P(
                                 children=f'Доступны данные за период {start_date.strftime("%d %B %Y")} - {end_date.strftime("%d %B %Y")}'),
