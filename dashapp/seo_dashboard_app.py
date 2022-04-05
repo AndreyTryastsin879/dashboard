@@ -120,22 +120,7 @@ def create_dashboard(flask_app, project):
     return dashboard
 
 
-def create_dashboard(flask_app, project):
-
-    dashboard = dash.Dash(
-        server=flask_app,
-        name='SEO Dashboard',
-        url_base_pathname=f'/dash/{project}/service/seo/',
-        suppress_callback_exceptions=True,
-        external_stylesheets=EXTERNAL_STYLESHEET
-    )
-
-    dashboard.layout = html.Div()
-
-    return dashboard
-
-
-def update_layout(dashboard, project):
+def update_layout(project):
     engine = db.create_engine(Configuration.SQLALCHEMY_DATABASE_URI)
     connection = engine.connect()
     metadata = db.MetaData()
@@ -166,7 +151,7 @@ def update_layout(dashboard, project):
     print(yandex_traffic_df['created'].min(), yandex_traffic_df['created'].max())
 
     ### DASHBOARD FRONT
-    dashboard.layout = html.Div(children=[
+    return html.Div(children=[
 
         html.Div(children=[
             html.H1(children=f"Данные по SEO {project.title()}")], className="pagetitle"),
@@ -215,88 +200,8 @@ def update_layout(dashboard, project):
 
     ], className="row", style={"color": "#444444"})
 
-    # CALLBACKS
 
-    # Idexed_pages_quantity
-    ###Yandex
-    line_plot_settings(
-        dashboard=dashboard,
-        output='yandex_indexed_pages_quantity_line_plot',
-        input_selector='yandex_indexed_pages_quantity_selector',
-        df=yandex_indexed_pages_quantity_df,
-        colour='#d62728',
-        xaxis_name='Дата',
-        yaxis_name='Количество страниц',
-        plot_title='Количество страниц в базе Яндекса'
-    )
-
-    ### Google
-    line_plot_settings(
-        dashboard=dashboard,
-        output='google_indexed_pages_quantity_line_plot',
-        df=google_indexed_pages_quantity_df,
-        input_selector='google_indexed_pages_quantity_selector',
-        colour='#2470dc',
-        xaxis_name='Дата',
-        yaxis_name='Количество страниц',
-        plot_title='Количество страниц в базе Google'
-    )
-
-    # SE POSITIONS
-    ### Yandex
-    line_plot_settings(
-        dashboard=dashboard,
-        df=yandex_positions_df,
-        output='yandex_positions_line_plot',
-        input_selector='yandex_positions_selector',
-        colour='#d62728',
-        xaxis_name='Дата',
-        yaxis_name='% запросов в ТОП10',
-        plot_title='Доля запросов в ТОП10 Яндекса'
-    )
-
-    ### Google
-    line_plot_settings(
-        dashboard=dashboard,
-        df=google_positions_df,
-        output='google_positions_line_plot',
-        input_selector='google_positions_selector',
-        colour='#2470dc',
-        xaxis_name='Дата',
-        yaxis_name='% запросов в ТОП10',
-        plot_title='Доля запросов в ТОП10 Google'
-    )
-
-    # SE TRAFFIC
-    ### Yandex
-    line_plot_settings(
-        dashboard=dashboard,
-        df=yandex_traffic_df,
-        output='yandex_traffic_line_plot',
-        input_selector='yandex_traffic_selector',
-        colour='#d62728',
-        xaxis_name='Дата',
-        yaxis_name='Количество визитов',
-        plot_title='Количество визитов из Яндекса'
-    )
-
-    ### Google
-    line_plot_settings(
-        dashboard=dashboard,
-        df=google_traffic_df,
-        output='google_traffic_line_plot',
-        input_selector='google_traffic_selector',
-        colour='#2470dc',
-        xaxis_name='Дата',
-        yaxis_name='Количество визитов',
-        plot_title='Количество визитов из Google'
-    )
-    return dashboard
-
-
-
-
-def update_layout_callback_factory(dashboard, project):
+def update_layout_callback_factory(project):
     def inner():
         return update_layout(project)
 
