@@ -14,6 +14,10 @@ def line_plot(df, title, selector_id, graph_id):
         start_date = df['created'].dt.date.min()
         end_date = df['created'].dt.date.max()
 
+        count_d = df['created'].count()
+        count_v = df['value'].count()
+        sum_v = df['value'].sum()
+
         return html.Div(
             children=[
 
@@ -22,6 +26,11 @@ def line_plot(df, title, selector_id, graph_id):
 
                         html.Div(children=[
                             html.H5(children=title, className="card-title"),
+
+                            html.P(children=f'Количество дат {count_d}'),
+
+                            html.P(children=f'Количество значений {count_v}'),
+                            html.P(children=f'Сумма значений {sum_v}'),
 
                             html.P(
                                 children=f'Доступны данные за период {start_date.strftime("%d %B %Y")} - {end_date.strftime("%d %B %Y")}'),
@@ -72,17 +81,32 @@ def line_plot_settings(dashboard, df, output, input_selector, colour, xaxis_name
                            )
                 ]
 
+        start_date = df['created'].dt.date.min()
+        end_date = df['created'].dt.date.max()
+
+        count_d = df['created'].count()
+        count_v = df['value'].count()
+        sum_v = df['value'].sum()
+
         return (
             {
                 'data': data,
-                'layout': go.Layout(xaxis={'title': f'{xaxis_name}'},
+                'layout': go.Layout(xaxis={'title': f'start: {start_date} end: start: {end_date}'},
                                     yaxis={'title': f'{yaxis_name}'},
-                                    title={'text': f'{plot_title}',
+                                    title={'text': f'К-дат: {count_d} К-значений: {count_v} С-значений: {sum_v}',
                                            'y': 0.9,
                                            'x': 0.5,
                                            'xanchor': 'center',
                                            'yanchor': 'top'}
                                     )
+                # 'layout': go.Layout(xaxis={'title': f'{xaxis_name}'},
+                #                     yaxis={'title': f'{yaxis_name}'},
+                #                     title={'text': f'{plot_title}',
+                #                            'y': 0.9,
+                #                            'x': 0.5,
+                #                            'xanchor': 'center',
+                #                            'yanchor': 'top'}
+                #                     )
             },
         )
 
