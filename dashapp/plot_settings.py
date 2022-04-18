@@ -74,7 +74,7 @@ def line_plot(df, title, selector_id, graph_id):
                             html.Div(
                                 children=[
                                     dcc.DatePickerRange(
-                                        start_date=df['created'].dt.date.max() - timedelta(days=7),
+                                        start_date=df['created'].dt.date.max() - timedelta(days=21),
                                         end_date=df['created'].dt.date.max(),
                                         display_format='DD-MM-YY',
                                         id=selector_id
