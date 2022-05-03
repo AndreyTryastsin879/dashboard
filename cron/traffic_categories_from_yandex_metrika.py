@@ -118,15 +118,16 @@ def main():
             #    print(list_of_dicts)
             #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
 
-            if project_name == 'Frutoss':
-                list_of_dicts = frutoss(df)
-                print(list_of_dicts)
-                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-
+            #if project_name == 'Frutoss':
+            #    list_of_dicts = frutoss(df)
+            #    print(list_of_dicts)
+            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+#
             #if project_name == 'Mentalshop':
             #    list_of_dicts = mentalshop(df)
             #    print(list_of_dicts)
             #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
             #if project_name == 'Da-Vita':
             #    list_of_dicts = davita(df)
             #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
@@ -143,37 +144,37 @@ def main():
             #    list_of_dicts = flexfit(df)
             #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
 #
-            #if project_name == 'Certex':
-            #    list_of_dicts = certex(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-#
+            if project_name == 'Certex':
+                list_of_dicts = certex(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
             #if project_name == 'Inauto':
             #    list_of_dicts = inauto(df)
             #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
 #
-            #if project_name == 'Skurala':
-            #    list_of_dicts = skurala(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-#
-            #if project_name == 'Elitewheels':
-            #    list_of_dicts = elitewheels(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-#
-            #if project_name == 'Elitewheels-Msk':
-            #    list_of_dicts = elitewheels_msk(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-#
-            #if project_name == 'Kolesa-V-Pitere':
-            #    list_of_dicts = kvp(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-#
-            #if project_name == 'The-Koleso':
-            #    list_of_dicts = koleso(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
-#
-            #if project_name == 'Kypishiny':
-            #    list_of_dicts = kypishiny(df)
-            #    take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+            if project_name == 'Skurala':
+                list_of_dicts = skurala(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
+            if project_name == 'Elitewheels':
+                list_of_dicts = elitewheels(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
+            if project_name == 'Elitewheels-Msk':
+                list_of_dicts = elitewheels_msk(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
+            if project_name == 'Kolesa-V-Pitere':
+                list_of_dicts = kvp(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
+            if project_name == 'The-Koleso':
+                list_of_dicts = koleso(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
+
+            if project_name == 'Kypishiny':
+                list_of_dicts = kypishiny(df)
+                take_traffic_category_and_visits_and_insert_to_database(project_name, current_date, last_month_day, list_of_dicts)
 
         except Exception as e:
             error_mesage = get_traceback(e)

@@ -1,5 +1,7 @@
 import pandas as pd
 
+FOLDER_PATH = 'www/dashboard/cron/projects_aliases'
+
 def megaposm(df):
     main = 'https://megaposm.com/'
     cat = df['urls'].str.contains(pat='https://megaposm.com/.*/$',regex=True)
@@ -20,8 +22,8 @@ def megaposm(df):
 
 
 def frutoss(df):
-    frutoss_categories_aliases = pd.read_csv('www/dashboard/cron/projects_aliases/frutoss_categories_aliases.csv')
-    frutoss_products_aliases = pd.read_csv('www/dashboard/cron/projects_aliases/frutoss_products_aliases.csv')
+    frutoss_categories_aliases = pd.read_csv(f'{FOLDER_PATH}/frutoss_categories_aliases.csv')
+    frutoss_products_aliases = pd.read_csv(f'{FOLDER_PATH}/frutoss_products_aliases.csv')
 
     main = 'https://frutoss.ru/'
     subdomain = df['urls'].str.contains(pat='https://.*[A-z].frutoss.ru/.*',regex=True)
@@ -193,7 +195,7 @@ def flexfit(df):
 
 
 def certex(df):
-    certex = pd.read_excel('projects_aliases/certex.xlsx')
+    certex = pd.read_excel(f'{FOLDER_PATH}/certex.xlsx')
     df = pd.merge(df, certex, on = 'urls', how='left')
     subdomain = df['urls'].str.contains(pat='https://.*[a-z].certex.spb.ru/.*',regex=True)
     
@@ -256,8 +258,8 @@ def inauto(df):
 
 
 def skurala(df):
-    skurala_categories_aliases = pd.read_csv('projects_aliases/skurala_categories_aliases.csv')
-    skurala_products_aliases = pd.read_csv('projects_aliases/skurala_products_aliases.csv')
+    skurala_categories_aliases = pd.read_csv(f'{FOLDER_PATH}/skurala_categories_aliases.csv')
+    skurala_products_aliases = pd.read_csv(f'{FOLDER_PATH}/skurala_products_aliases.csv')
 
     main = 'https://skurala.ru/'
     
@@ -282,9 +284,9 @@ def skurala(df):
 
 
 def elitewheels(df):
-    elitewheels_categories_aliases = pd.read_csv('projects_aliases/ew_categories_aliases.csv')
-    elitewheels_products_aliases = pd.read_csv('projects_aliases/ew_products_aliases.csv')
-    elitewheels_filters_aliases = pd.read_csv('projects_aliases/ew_filters_aliases.csv')
+    elitewheels_categories_aliases = pd.read_csv(f'{FOLDER_PATH}/ew_categories_aliases.csv')
+    elitewheels_products_aliases = pd.read_csv(f'{FOLDER_PATH}/ew_products_aliases.csv')
+    elitewheels_filters_aliases = pd.read_csv(f'{FOLDER_PATH}/ew_filters_aliases.csv')
 
     main = 'https://elitewheels.ru/'
     
@@ -310,9 +312,9 @@ def elitewheels(df):
 
 
 def elitewheels_msk(df):
-    elitewheels_categories_aliases = pd.read_csv('projects_aliases/ew_msk_categories_aliases.csv')
-    elitewheels_products_aliases = pd.read_csv('projects_aliases/ew_msk_products_aliases.csv')
-    elitewheels_filters_aliases = pd.read_csv('projects_aliases/ew_msk_filters_aliases.csv')
+    elitewheels_categories_aliases = pd.read_csv(f'{FOLDER_PATH}/ew_msk_categories_aliases.csv')
+    elitewheels_products_aliases = pd.read_csv(f'{FOLDER_PATH}/ew_msk_products_aliases.csv')
+    elitewheels_filters_aliases = pd.read_csv(f'{FOLDER_PATH}/ew_msk_filters_aliases.csv')
 
     main = 'https://moscow.elitewheels.ru/'
     
@@ -338,9 +340,9 @@ def elitewheels_msk(df):
 
 
 def kvp(df):
-    kvp_categories_aliases = pd.read_csv('projects_aliases/kvp_categories_aliases.csv')
-    kvp_products_aliases = pd.read_csv('projects_aliases/kvp_products_aliases.csv')
-    kvp_filters_aliases = pd.read_csv('projects_aliases/kvp_filters_aliases.csv')
+    kvp_categories_aliases = pd.read_csv(f'{FOLDER_PATH}/kvp_categories_aliases.csv')
+    kvp_products_aliases = pd.read_csv(f'{FOLDER_PATH}/kvp_products_aliases.csv')
+    kvp_filters_aliases = pd.read_csv(f'{FOLDER_PATH}/kvp_filters_aliases.csv')
 
     main = 'https://www.kolesa-v-pitere.ru/'
     
@@ -369,8 +371,8 @@ def koleso(df):
     cat = df['urls'].str.contains(pat='https://the-koleso.ru/.*/$',regex=True)
     subdomain = df['urls'].str.contains(pat='https://.*[a-z].the-koleso.ru/.*',regex=True)
 
-    koleso_products_aliases = pd.read_csv('projects_aliases/koleso_products_aliases.csv')
-    koleso_filters_aliases = pd.read_csv('projects_aliases/koleso_filters_aliases.csv')
+    koleso_products_aliases = pd.read_csv(f'{FOLDER_PATH}/koleso_products_aliases.csv')
+    koleso_filters_aliases = pd.read_csv(f'{FOLDER_PATH}/koleso_filters_aliases.csv')
 
     main = 'https://the-koleso.ru/'
     
@@ -397,9 +399,9 @@ def koleso(df):
 
 
 def kypishiny(df):
-    kypishiny_categories_aliases = pd.read_csv('projects_aliases/ks_categories_aliases.csv')
-    kypishiny_products_aliases = pd.read_csv('projects_aliases/ks_products_aliases.csv')
-    kypishiny_filters_aliases = pd.read_csv('projects_aliases/ks_filters_aliases.csv')
+    kypishiny_categories_aliases = pd.read_csv(f'{FOLDER_PATH}/ks_categories_aliases.csv')
+    kypishiny_products_aliases = pd.read_csv(f'{FOLDER_PATH}/ks_products_aliases.csv')
+    kypishiny_filters_aliases = pd.read_csv(f'{FOLDER_PATH}/ks_filters_aliases.csv')
 
     main = 'https://kypishiny.ru/'
     
