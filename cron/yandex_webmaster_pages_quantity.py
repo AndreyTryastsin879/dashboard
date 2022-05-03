@@ -44,7 +44,7 @@ def main():
         
         print(project_name)
         
-        current_date = datetime.datetime.now()
+        current_date = datetime.datetime.now().date()
                            
         try:
 
@@ -52,7 +52,7 @@ def main():
             print(project_indexed_pages_quantity[0]['value'])
             
 
-            if len(project_indexed_pages_quantity) > 0:
+            if project_indexed_pages_quantity[0]['value'] > 0:
                 insert_data_to_database(project_name,
                                         'Yandex',
                                         'Yandex_indexed_pages_quantity', 
@@ -62,7 +62,7 @@ def main():
                 insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
                                                       'OK', '-', current_date, project_indexed_pages_quantity[0]['value'])
                 
-            if len(project_indexed_pages_quantity) == 0:
+            if project_indexed_pages_quantity[0]['value'] == 0:
                 pass
            
         
