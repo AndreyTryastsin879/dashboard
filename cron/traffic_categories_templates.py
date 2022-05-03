@@ -20,8 +20,8 @@ def megaposm(df):
 
 
 def frutoss(df):
-    frutoss_categories_aliases = pd.read_csv('projects_aliases/frutoss_categories_aliases.csv')
-    frutoss_products_aliases = pd.read_csv('projects_aliases/frutoss_products_aliases.csv')
+    frutoss_categories_aliases = pd.read_csv('www/dashboard/cron/projects_aliases/frutoss_categories_aliases.csv')
+    frutoss_products_aliases = pd.read_csv('www/dashboard/cron/projects_aliases/frutoss_products_aliases.csv')
 
     main = 'https://frutoss.ru/'
     subdomain = df['urls'].str.contains(pat='https://.*[A-z].frutoss.ru/.*',regex=True)
@@ -399,7 +399,7 @@ def koleso(df):
 def kypishiny(df):
     kypishiny_categories_aliases = pd.read_csv('projects_aliases/ks_categories_aliases.csv')
     kypishiny_products_aliases = pd.read_csv('projects_aliases/ks_products_aliases.csv')
-    #kypishiny_filters_aliases = pd.read_csv('projects_aliases/ks_filters_aliases.csv')
+    kypishiny_filters_aliases = pd.read_csv('projects_aliases/ks_filters_aliases.csv')
 
     main = 'https://kypishiny.ru/'
     
@@ -411,7 +411,7 @@ def kypishiny(df):
     
     df.loc[df['only_alias'].isin(kypishiny_categories_aliases['alias']), 'traffic_category'] = 'Категории'
     df.loc[df['only_alias'].isin(kypishiny_products_aliases['alias']), 'traffic_category'] = 'Карточки'
-    #df.loc[df['only_alias'].isin(kvp_filters_aliases['alias']), 'traffic_category'] = 'Фильтры'
+    df.loc[df['only_alias'].isin(kypishiny_filters_aliases['alias']), 'traffic_category'] = 'Фильтры'
 
     df['traffic_category'] = df['traffic_category'].replace('', 'Другое')
 
