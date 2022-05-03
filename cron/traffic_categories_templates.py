@@ -1,6 +1,6 @@
 import pandas as pd
 
-FOLDER_PATH = '/projects_aliases'
+FOLDER_PATH = 'projects_aliases'
 
 def megaposm(df):
     main = 'https://megaposm.com/'
