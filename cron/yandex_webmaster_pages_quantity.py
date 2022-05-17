@@ -63,22 +63,22 @@ def main():
                       project_indexed_pages_quantity[element]['value'])
 
 
-                # report_date = datetime.datetime.fromisoformat(project_indexed_pages_quantity[element]['date']).date()
-                # report_value = project_indexed_pages_quantity[element]['value']
-                #
-                # insert_data_to_database(project_name,
-                #                         'Yandex',
-                #                         'Yandex_indexed_pages_quantity',
-                #                         report_value,
-                #                         report_date)
-                #
-                # insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
-                #                                       'OK', '-', current_date, report_value)
+                report_date = datetime.datetime.fromisoformat(project_indexed_pages_quantity[element]['date']).date()
+                report_value = project_indexed_pages_quantity[element]['value']
+
+                insert_data_to_database(project_name,
+                                        'Yandex',
+                                        'Yandex_indexed_pages_quantity',
+                                        report_value,
+                                        report_date)
+
+                insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
+                                                      'OK', '-', current_date, report_value)
 
         except Exception as e:
             error_mesage = get_traceback(e)
-            # insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
-            #                                       'ERROR', error_mesage, current_date, '-')
+            insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
+                                                  'ERROR', error_mesage, current_date, '-')
 
 if __name__ == '__main__':
     main()
