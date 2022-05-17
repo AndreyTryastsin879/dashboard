@@ -74,3 +74,14 @@ def select_projects_by_service_id(service_name):
 def get_traceback(e):
     lines = traceback.format_exception(type(e), e, e.__traceback__)
     return ''.join(lines)
+
+
+ResultSet = (
+        connection.execute(db.select([seo_data_linear_plots])
+                           .where(seo_data_linear_plots.columns.data_type == 'Yandex_indexed_pages_quantity')
+                           .order_by(db.desc(seo_data_linear_plots.columns.created))
+                           .limit(1)).fetchall()
+    )
+
+
+yandex_indexed_pages_quantity_last_date = ResultSet[0][4]
