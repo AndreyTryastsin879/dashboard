@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 from config import *
 
+user_agent = {'User-agent': 'Mozilla/5.0'}
 
 def parse_mono_sitemap(beautiful_soup):
     url_list = []
@@ -25,7 +26,7 @@ def parse_multi_sitemap(beautiful_soup):
 
     url_list = []
     for map_number in range(len(maps)):
-        request = requests.get(maps[map_number])
+        request = requests.get(maps[map_number], headers=user_agent)
         time.sleep(2)
         soup = BeautifulSoup(request.text, 'lxml')
         for url in soup.find_all('loc'):
@@ -57,7 +58,7 @@ def main():
         current_date = datetime.datetime.now()
         try:
             if project_second_sitemap_path == None:
-                request = requests.get(project_sitemap_path)
+                request = requests.get(project_sitemap_path, headers=user_agent)
                 soup_sitemap = BeautifulSoup(request.text, 'lxml')
 
                 url_list = check_multi_or_mono_sitemap(soup_sitemap)
@@ -69,12 +70,12 @@ def main():
                                                   'OK', '-', current_date, value)
 
             if project_second_sitemap_path != None:
-                request_first_sitemap = requests.get(project_sitemap_path)
+                request_first_sitemap = requests.get(project_sitemap_path, headers=user_agent)
                 soup_first_sitemap = BeautifulSoup(request.text, 'lxml')
 
                 first_sitemap_url_list = check_multi_or_mono_sitemap(soup_first_sitemap)
 
-                request_second_sitemap = requests.get(project_second_sitemap_path)
+                request_second_sitemap = requests.get(project_second_sitemap_path, headers=user_agent)
                 soup_second_sitemap = BeautifulSoup(request_second_sitemap.text, 'lxml')
 
                 second_sitemap_url_list = check_multi_or_mono_sitemap(soup_second_sitemap)
