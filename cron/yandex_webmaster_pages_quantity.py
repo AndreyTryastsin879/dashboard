@@ -48,13 +48,14 @@ def main():
 
         current_date = datetime.datetime.now()
 
-        yandex_indexed_pages_quantity_next_date_after_last_date = yandex_indexed_pages_quantity_last_date + timedelta(days=1)
+        yandex_indexed_pages_quantity_next_date_after_last_date = yandex_indexed_pages_quantity_last_date - timedelta(days=1)
 
         print(current_date.date(), yandex_indexed_pages_quantity_next_date_after_last_date.date())
 
         try:
 
-            project_indexed_pages_quantity = get_quantity_of_pages_webmaster_api(user_id, project_yandex_webmaster_host,
+            project_indexed_pages_quantity = get_quantity_of_pages_webmaster_api(user_id,
+                                                                                 project_yandex_webmaster_host,
                                                                                  yandex_indexed_pages_quantity_next_date_after_last_date,
                                                                                  current_date)
 
@@ -63,22 +64,22 @@ def main():
                       project_indexed_pages_quantity[element]['value'])
 
 
-                # report_date = datetime.datetime.fromisoformat(project_indexed_pages_quantity[element]['date']).date()
-                # report_value = project_indexed_pages_quantity[element]['value']
-                #
-                # insert_data_to_database(project_name,
-                #                         'Yandex',
-                #                         'Yandex_indexed_pages_quantity',
-                #                         report_value,
-                #                         report_date)
-                #
-                # insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
-                #                                       'OK', '-', current_date, report_value)
+                report_date = datetime.datetime.fromisoformat(project_indexed_pages_quantity[element]['date']).date()
+                report_value = project_indexed_pages_quantity[element]['value']
+
+                insert_data_to_database(project_name,
+                                        'Yandex',
+                                        'Yandex_indexed_pages_quantity',
+                                        report_value,
+                                        report_date)
+
+                insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
+                                                      'OK', '-', current_date, report_value)
 
         except Exception as e:
             error_mesage = get_traceback(e)
-            # insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
-            #                                       'ERROR', error_mesage, current_date, '-')
+            insert_data_to_data_collecting_report(project_name, 'Yandex_indexed_pages_quantity',
+                                                  'ERROR', error_mesage, current_date, '-')
 
 if __name__ == '__main__':
     main()
