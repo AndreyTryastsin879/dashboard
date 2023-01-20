@@ -102,8 +102,7 @@ def main():
 
         print(current_date)
 
-        #first_month_day = datetime.date(current_date.year, current_date.month-1, 1)
-        first_month_day = datetime.date(2022, 12, 1)
+        first_month_day = datetime.date(current_date.year, current_date.month-1, 1)
         last_month_day = last_day_of_month(first_month_day)
 
         print(first_month_day, last_month_day)
