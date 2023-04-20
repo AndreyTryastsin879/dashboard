@@ -18,7 +18,7 @@ projects_services = db.Table('projects_services', metadata, autoload=True, autol
 service = db.Table('service', metadata, autoload=True, autoload_with=engine)
 
 
-YANDEX_TOKEN = 'y0_AgAAAAASqca9AAaElQAAAADQKz4Yq_tVuPHCTAKIQLy3rAYljzKccws'
+YANDEX_TOKEN = 'y0_AgAAAAASqca9AAaElQAAAADf0c6gbPilbUJpQl-QBox2FC5UvONunM0'
 
 WEBMASTER_URL_TEMPLATE = 'https://api.webmaster.yandex.net/v4/user/{}/hosts/{}/search-urls/in-search/history'
 
