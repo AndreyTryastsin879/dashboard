@@ -99,7 +99,7 @@ def main():
         print(project_name)
 
         #current_date = datetime.datetime.now()
-        current_date = datetime.date(2023,6,1)
+        current_date = datetime.date(2023,7,1)
 
         print(current_date)
 
